@@ -1,8 +1,7 @@
-*,
-*::before,
-*::after {
+* {
   box-sizing: border-box;
-  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  padding: 0;
 }
 
 body {
@@ -11,46 +10,47 @@ body {
   justify-content: center;
   align-items: center;
   height: 100vh;
-  margin: 0;
-  font-size: 7.5vmin;
 }
 
 #game-board {
+  --cell-size: 20vmin;
+  --cell-gap: 2vmin;
+
   position: relative;
   display: grid;
-  grid-template-columns: repeat(var(--grid-size), var(--cell-size));
-  grid-template-rows: repeat(var(--grid-size), var(--cell-size));
+  grid-template-columns: repeat(4, var(--cell-size));
+  grid-template-rows: repeat(4, var(--cell-size));
   gap: var(--cell-gap);
-  padding: var(--cell-gap);
   border-radius: 1vmin;
-  background-color: #ccc;
 }
 
 .cell {
-  background-color: #aaa;
+  background-color: #444;
   border-radius: 1vmin;
 }
 
 .tile {
   position: absolute;
-  top: calc(var(--y) * (var(--cell-size) + var(--cell-gap)) + var(--cell-gap));
-  left: calc(var(--x) * (var(--cell-size) + var(--cell-gap)) + var(--cell-gap));
+  top: calc(var(--y) * (var(--cell-size) + var(--cell-gap)));
+  left: calc(var(--x) * (var(--cell-size) + var(--cell-gap)));
   display: flex;
   justify-content: center;
   align-items: center;
   width: var(--cell-size);
   height: var(--cell-size);
   border-radius: 1vmin;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 7.5vmin;
   font-weight: bold;
   background-color: hsl(25, 60%, var(--bg-lightness));
   color: hsl(20, 25%, var(--text-lightness));
-  animation: show 200ms ease-in-out;
-  transition: 100ms ease-in-out;
+  animation: show 200ms;
+  transition: 100ms;
 }
 
 @keyframes show {
   0% {
-    opacity: .5;
+    opacity: 0.5;
     transform: scale(0);
   }
 }
