@@ -65,7 +65,7 @@ async function moveUp() {
 }
 
 async function moveDown() {
-  await slideTiles(grid.cellsGroupedByColumn.map(column => [...column].reverse()));
+  await slideTiles(grid.cellsGroupedByReversedColumn);
 }
 
 async function moveLeft() {
@@ -73,7 +73,7 @@ async function moveLeft() {
 }
 
 async function moveRight() {
-  await slideTiles(grid.cellsGroupedByRow.map(raw => [...raw].reverse()));
+  await slideTiles(grid.cellsGroupedByReversedRow);
 }
 
 async function slideTiles(groupedCells) {
@@ -82,7 +82,9 @@ async function slideTiles(groupedCells) {
   groupedCells.forEach(group => slideTilesInGroup(group, promises));
 
   await Promise.all(promises);
-  grid.cells.forEach(cell => cell.mergeTiles());
+  grid.cells.forEach(cell => {
+    cell.hasTileForMerge() && cell.mergeTiles()
+  });
 }
 
 function slideTilesInGroup(group, promises) {
@@ -121,7 +123,7 @@ function canMoveUp() {
 }
 
 function canMoveDown() {
-  return canMove(grid.cellsGroupedByColumn.map(column => [...column].reverse()));
+  return canMove(grid.cellsGroupedByReversedColumn);
 }
 
 function canMoveLeft() {
@@ -129,7 +131,7 @@ function canMoveLeft() {
 }
 
 function canMoveRight() {
-  return canMove(grid.cellsGroupedByRow.map(raw => [...raw].reverse()));
+  return canMove(grid.cellsGroupedByReversedRow);
 }
 
 function canMove(groupedCells) {

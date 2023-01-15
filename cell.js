@@ -29,21 +29,18 @@ export class Cell {
     this.linkedTileForMerge = null;
   }
 
-  withoutTileForMerge() {
-    return !this.linkedTileForMerge;
+  hasTileForMerge() {
+    return !!this.linkedTileForMerge;
   }
 
   canAccept(newTile) {
     return (
       this.isEmpty() ||
-      (this.withoutTileForMerge() && this.linkedTile.value === newTile.value)
+      (!this.hasTileForMerge() && this.linkedTile.value === newTile.value)
     );
   }
 
   mergeTiles() {
-    if (this.isEmpty() || this.withoutTileForMerge()) {
-      return;
-    }
     this.linkedTile.setValue(this.linkedTile.value + this.linkedTileForMerge.value);
     this.linkedTileForMerge.removeFromDOM();
     this.unlinkTileForMerge();
